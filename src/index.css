@@ -1,0 +1,314 @@
+@import "tailwindcss";
+
+:root {
+  --background: oklch(0.985 0.004 25);
+  --foreground: oklch(0.22 0.012 25);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.012 25);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.012 25);
+  --primary: #d6001c;
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.008 25);
+  --secondary-foreground: oklch(0.3 0.04 25);
+  --muted: oklch(0.965 0.006 25);
+  --muted-foreground: oklch(0.46 0.018 25);
+  --accent: oklch(0.94 0.035 25);
+  --accent-foreground: #b30018;
+  --destructive: #d6001c;
+  --destructive-foreground: oklch(0.99 0 0);
+  --success: oklch(0.53 0.14 155);
+  --success-foreground: oklch(0.99 0 0);
+  --info: oklch(0.52 0.15 255);
+  --info-foreground: oklch(0.99 0 0);
+  --border: oklch(0.91 0.008 25);
+  --input: oklch(0.88 0.01 25);
+  --ring: #d6001c;
+  --radius: 0.75rem;
+
+  color-scheme: light;
+}
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+
+  --shadow-soft: 0 10px 30px -18px oklch(0.22 0.03 25 / 0.22);
+  --shadow-lift: 0 24px 50px -28px oklch(0.22 0.03 25 / 0.3);
+  --shadow-hero: 0 35px 80px -35px oklch(0.2 0.08 25 / 0.55);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100svh;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    background-color: oklch(0.9 0.065 25);
+    color: var(--foreground);
+  }
+}
+
+@keyframes jnt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes jnt-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .page-container {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .page-container {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page-container {
+      padding-inline: 2rem;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .rise-in {
+    animation: jnt-rise-in 0.45s ease-out both;
+  }
+
+  .brand-gradient {
+    background-image: linear-gradient(
+      135deg,
+      #e30613 0%,
+      #c8102e 55%,
+      #8f0019 100%
+    );
+  }
+
+  .brand-grid {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      white 1px,
+      transparent 0
+    );
+    background-size: 26px 26px;
+  }
+}
+
+.dialog-overlay[data-state="open"] {
+  animation: jnt-fade-in 150ms ease-out;
+}
+
+.dialog-content[data-state="open"] {
+  animation: jnt-rise-in 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.tracking-map {
+  font-family: var(--font-sans);
+}
+
+.tracking-map-endpoint-icon,
+.tracking-map-vehicle-icon {
+  border: 0;
+  background: transparent;
+}
+
+.tracking-map-endpoint {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid white;
+  border-radius: 9999px;
+  box-shadow: 0 1px 5px rgb(0 0 0 / 35%);
+}
+
+.tracking-map-endpoint-origin {
+  background: #64746a;
+}
+
+.tracking-map-endpoint-destination {
+  background: #d6001c;
+}
+
+.tracking-map-transit-icon {
+  border: 0;
+  background: transparent;
+}
+
+.tracking-map-transit {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid white;
+  border-radius: 9999px;
+  box-shadow: 0 1px 5px rgb(0 0 0 / 35%);
+}
+
+.tracking-map-transit-completed {
+  background: #d6001c;
+}
+
+.tracking-map-transit-pending {
+  background: #8d9991;
+}
+
+.tracking-map-vehicle {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 2px solid #d6001c;
+  border-radius: 9999px;
+  background: white;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 35%);
+}
+
+.tracking-map-vehicle svg {
+  width: 25px;
+  height: 25px;
+}
+
+@media print {
+  @page {
+    size: 105mm 148mm;
+    margin: 6mm;
+  }
+
+  html {
+    font-size: 14px !important;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .page-container {
+    padding-inline: 0 !important;
+  }
+
+  .label-sheet {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 3mm !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .label-barcode {
+    height: 12mm !important;
+  }
+
+  .label-sheet * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

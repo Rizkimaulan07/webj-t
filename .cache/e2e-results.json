@@ -1,0 +1,393 @@
+{
+  "results": [
+    {
+      "name": "Login demo redirect ke riwayat pesanan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Alamat pertama tersimpan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Nomor telepon dinormalisasi",
+      "ok": true,
+      "detail": "format bersih"
+    },
+    {
+      "name": "Alamat kedua tersimpan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Alamat berhasil diubah",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Pilih alamat tersimpan mengisi form pengirim",
+      "ok": true,
+      "detail": "Rizki Maulana Putra"
+    },
+    {
+      "name": "Kota alamat tersimpan terisi",
+      "ok": true,
+      "detail": "Bandung"
+    },
+    {
+      "name": "Validasi penerima kosong tampil",
+      "ok": true,
+      "detail": "Nama minimal 3 karakter. | Masukkan nomor HP. | Alamat minimal 10 karakter. | Pilih kota. | Kode pos harus 5 digit angka."
+    },
+    {
+      "name": "Tetap di langkah penerima saat tidak valid",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Pilih alamat tersimpan mengisi form penerima",
+      "ok": true,
+      "detail": "Siti Aminah"
+    },
+    {
+      "name": "Asuransi tercentang",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Bandung→Surabaya 2 kg menghasilkan 3 opsi",
+      "ok": true,
+      "detail": "opsi=3"
+    },
+    {
+      "name": "Same Day tidak muncul untuk beda kota",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Opsi termurah berlabel Termurah",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Layanan Reguler terpilih",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Simulasi QRIS tampil",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Ringkasan pembayaran QRIS",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Halaman sukses menampilkan resi baru",
+      "ok": true,
+      "detail": "LJX9368556734"
+    },
+    {
+      "name": "Ringkasan QRIS di halaman sukses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Total dan layanan tampil di halaman sukses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Barcode Code128 SVG ter-render",
+      "ok": true,
+      "detail": "rect=50, svg=3"
+    },
+    {
+      "name": "Label memuat nomor resi",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Label memuat rute dan layanan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Label memuat status pembayaran lunas",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "CSS print mendefinisikan halaman 105mm x 148mm",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Elemen no-print disembunyikan saat cetak",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Label selebar halaman saat cetak",
+      "ok": true,
+      "detail": "{\"noPrint\":\"none\",\"maxWidth\":\"none\",\"border\":\"0px\",\"shadow\":\"none\"}"
+    },
+    {
+      "name": "PDF label hanya 1 halaman",
+      "ok": true,
+      "detail": "halaman=1"
+    },
+    {
+      "name": "Ukuran PDF A6 (297.6 x 419.5 pt)",
+      "ok": true,
+      "detail": "298.07999 x 420"
+    },
+    {
+      "name": "Pencarian resi menyaring pesanan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Filter status Diproses menampilkan pesanan baru",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Filter Terkirim menampilkan pesanan seed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Dialog detail menampilkan timeline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Dialog detail memuat data pengirim/penerima",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Alamat berhasil dihapus",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Tambah alamat dari stepper langsung mengisi pengirim",
+      "ok": true,
+      "detail": "Andi Wijaya"
+    },
+    {
+      "name": "Alamat baru dari stepper langsung terpilih",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Bandung→Bandung memunculkan Same Day",
+      "ok": true,
+      "detail": "opsi=4"
+    },
+    {
+      "name": "Cabang drop-off bisa dipilih",
+      "ok": true,
+      "detail": "JNT Drop Point Bandung Dago — Bandung"
+    },
+    {
+      "name": "Simulasi COD tampil",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Ringkasan COD menampilkan total",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Resi COD baru terbit",
+      "ok": true,
+      "detail": "LJX9667114219"
+    },
+    {
+      "name": "Halaman sukses COD menampilkan instruksi tunai",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Halaman sukses menampilkan cabang drop-off",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Label COD menampilkan tagihan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Label Same Day menampilkan layanan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Pesanan kedua masuk riwayat",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Pencarian resi kedua bekerja",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Detail COD memuat status pembayaran saat diterima",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Detail COD memuat cabang drop-off",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y home-mobile: semua input berlabel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y home-mobile: ada landmark main",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y home-mobile: tepat satu h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "A11y home-mobile: semua gambar punya alt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y home-mobile: tautan punya nama aksesibel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y home-mobile: target sentuh >=44px",
+      "ok": true,
+      "detail": "0/27 kecil: "
+    },
+    {
+      "name": "A11y tarif-mobile: semua input berlabel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y tarif-mobile: ada landmark main",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y tarif-mobile: tepat satu h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "A11y tarif-mobile: semua gambar punya alt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y tarif-mobile: tautan punya nama aksesibel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y tarif-mobile: target sentuh >=44px",
+      "ok": true,
+      "detail": "0/17 kecil: "
+    },
+    {
+      "name": "A11y kirim-mobile: semua input berlabel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y kirim-mobile: ada landmark main",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y kirim-mobile: tepat satu h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "A11y kirim-mobile: semua gambar punya alt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y kirim-mobile: tautan punya nama aksesibel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y kirim-mobile: target sentuh >=44px",
+      "ok": true,
+      "detail": "0/22 kecil: "
+    },
+    {
+      "name": "A11y pesanan-mobile: semua input berlabel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y pesanan-mobile: ada landmark main",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y pesanan-mobile: tepat satu h1",
+      "ok": true,
+      "detail": "h1=1"
+    },
+    {
+      "name": "A11y pesanan-mobile: semua gambar punya alt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y pesanan-mobile: tautan punya nama aksesibel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "A11y pesanan-mobile: target sentuh >=44px",
+      "ok": true,
+      "detail": "0/28 kecil: "
+    },
+    {
+      "name": "Rute terproteksi redirect ke /masuk",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Sesi login pulih setelah restore storage",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Halaman 404 tampil",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "errors": [],
+  "awb1": "LJX9368556734",
+  "awb2": "LJX9667114219",
+  "branch": "JNT Drop Point Bandung Dago — Bandung"
+}
