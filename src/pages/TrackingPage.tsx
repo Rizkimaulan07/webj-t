@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { LifeBuoy, Search } from "lucide-react"
 
+import { PageHeader } from "@/components/shared/PageHeader"
 import { TrackingPanel } from "@/features/tracking/TrackingPanel"
 import { DEMO_TRACKING_CODES } from "@/mocks/shipments"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,22 +20,12 @@ export function TrackingPage() {
 
   return (
     <>
-      <section className="border-b bg-card/60 py-8 sm:py-12">
-        <div className="page-container">
-          <p className="inline-flex items-center gap-2 rounded-full bg-accent/15 px-3 py-1.5 text-xs font-bold text-accent-foreground">
-            <Search className="size-3.5" aria-hidden="true" />
-            Pelacakan paket
-          </p>
-          <h1 className="mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl">
-            Temukan posisi paketmu
-          </h1>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Masukkan nomor resi untuk melihat status dan riwayat perjalanan
-            terbaru. Nomor resi bisa kamu temukan pada bukti pembayaran atau
-            label pengiriman.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="Pelacakan paket"
+        title="Temukan posisi paketmu"
+        description="Masukkan nomor resi untuk melihat status dan riwayat perjalanan terbaru. Nomor resi bisa kamu temukan pada bukti pembayaran atau label pengiriman."
+        icon={Search}
+      />
 
       <div className="page-container grid gap-6 py-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,0.75fr)]">
         <Card>
@@ -55,7 +46,7 @@ export function TrackingPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <LifeBuoy className="size-5 text-accent-foreground" aria-hidden="true" />
+                <LifeBuoy className="size-5 text-primary" aria-hidden="true" />
                 Pakai resi demo
               </CardTitle>
             </CardHeader>
@@ -102,7 +93,7 @@ export function TrackingPage() {
                 Hubungi layanan pelanggan kami di{" "}
                 <a
                   href="tel:+622155501122"
-                  className="inline-flex min-h-11 items-center font-bold text-accent underline underline-offset-4"
+                  className="inline-flex min-h-11 items-center font-bold text-white underline underline-offset-4"
                 >
                   1500-123
                 </a>{" "}

@@ -173,7 +173,7 @@ export function Navbar() {
             variant="ghost"
             size="icon"
             aria-label="Lacak paket"
-            className="size-10 rounded-xl bg-accent/70 text-primary hover:bg-primary hover:text-white sm:w-auto sm:px-3"
+            className="size-11 rounded-xl bg-accent/70 text-primary hover:bg-primary hover:text-white sm:w-auto sm:px-3"
           >
             <Link to="/lacak">
               <Search className="size-5" aria-hidden="true" />
@@ -187,7 +187,7 @@ export function Navbar() {
                 variant="outline"
                 size="icon"
                 aria-label="Buka menu navigasi"
-                className="size-10 rounded-xl border-border bg-white shadow-sm"
+                className="size-11 rounded-xl border-border bg-white shadow-sm"
               >
                 <Menu className="size-5" aria-hidden="true" />
               </Button>

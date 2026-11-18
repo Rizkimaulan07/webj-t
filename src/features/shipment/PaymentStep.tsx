@@ -267,7 +267,7 @@ export function PaymentStep() {
                 <div className="grid gap-2 rounded-lg border bg-muted/40 p-3.5">
                   <Label htmlFor="cabang-dropoff">Cabang drop-off</Label>
                   <Select
-                    value={dropBranchId || undefined}
+                    value={dropBranchId ?? ""}
                     onValueChange={setDropBranchId}
                     disabled={branchesLoading}
                   >

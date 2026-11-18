@@ -1,6 +1,13 @@
 import { useDeferredValue, useState } from "react"
 import { Link } from "react-router-dom"
-import { AlertCircle, PackageSearch, Search, X } from "lucide-react"
+import {
+  AlertCircle,
+  CheckCircle2,
+  PackageSearch,
+  Search,
+  Truck,
+  X,
+} from "lucide-react"
 
 import { EmptyState } from "@/components/shared/EmptyState"
 import { Button } from "@/components/ui/button"
@@ -12,6 +19,7 @@ import { useAuthStore } from "@/features/auth/useAuthStore"
 import { OrderCard } from "@/features/orders/OrderCard"
 import { OrderDetailDialog } from "@/features/orders/OrderDetailDialog"
 import { useOrders } from "@/features/orders/useOrders"
+import { rupiah } from "@/lib/format"
 import { SHIPMENT_STATUSES, STATUS_META } from "@/lib/shipment-status"
 import type { ShipmentOrder, ShipmentStatus } from "@/types/shipment"
 
@@ -50,6 +58,19 @@ export function OrdersPage() {
       ? semua.length
       : semua.filter((order) => order.status === filter).length
 
+  const sedangBerjalan = semua.filter((order) =>
+    ["DIPROSES", "DALAM_PERJALANAN", "DIANTAR"].includes(order.status),
+  ).length
+  const terkirim = semua.filter((order) => order.status === "TERKIRIM").length
+  const totalBiaya = semua.reduce((jumlah, order) => jumlah + order.total, 0)
+
+  const statistik = [
+    { label: "Total pesanan", value: String(semua.length) },
+    { label: "Sedang berjalan", value: String(sedangBerjalan) },
+    { label: "Terkirim", value: String(terkirim) },
+    { label: "Total biaya", value: rupiah(totalBiaya) },
+  ]
+
   const resetFilter = () => {
     setStatus("SEMUA")
     setQuery("")
@@ -68,7 +89,34 @@ export function OrdersPage() {
         </div>
       </div>
 
-      <div className="mt-4 grid gap-3 rounded-xl border bg-card p-4 shadow-soft sm:p-5">
+      {!isPending && !isError && semua.length > 0 && (
+        <dl className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {statistik.map((item, index) => {
+            const Icon =
+              index === 1 ? Truck : index === 2 ? CheckCircle2 : PackageSearch
+            return (
+              <div
+                key={item.label}
+                className="flex items-center gap-3 rounded-xl border border-border/80 bg-card px-4 py-3.5 shadow-soft"
+              >
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
+                  <Icon className="size-5" aria-hidden="true" />
+                </span>
+                <div className="min-w-0">
+                  <dt className="text-xs font-medium text-muted-foreground">
+                    {item.label}
+                  </dt>
+                  <dd className="mt-0.5 truncate text-lg font-extrabold tracking-tight">
+                    {item.value}
+                  </dd>
+                </div>
+              </div>
+            )
+          })}
+        </dl>
+      )}
+
+      <div className="mt-4 grid gap-3 rounded-xl border border-border/80 bg-card p-4 shadow-soft sm:p-5">
         <div className="grid gap-1.5">
           <Label htmlFor="cari-pesanan" className="sr-only">
             Cari pesanan

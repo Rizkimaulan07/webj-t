@@ -1,5 +1,5 @@
 const CDP = "http://127.0.0.1:9223"
-const BASE = "http://127.0.0.1:5173"
+const BASE = "http://localhost:5173"
 const target = await fetch(`${CDP}/json/new?about:blank`, { method: "PUT" }).then(
   (r) => r.json(),
 )

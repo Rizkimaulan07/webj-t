@@ -2,7 +2,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 const CDP = "http://127.0.0.1:9223"
-const BASE = "http://127.0.0.1:5173"
+const BASE = "http://localhost:5173"
 const OUT = path.join(process.cwd(), ".cache", "shots")
 fs.mkdirSync(OUT, { recursive: true })
 
@@ -197,6 +197,33 @@ async function pressTab(text) {
   await sleep(400)
 }
 
+// Radix Select juga merespons pointerdown, bukan click programatik.
+async function pressSelect(selector) {
+  const pressed = await evaluate(`(() => {
+    const el = document.querySelector(${JSON.stringify(selector)});
+    if (!el) return false;
+    el.scrollIntoView({ block: "center" });
+    const rect = el.getBoundingClientRect();
+    const options = {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      button: 0,
+      clientX: rect.left + rect.width / 2,
+      clientY: rect.top + rect.height / 2,
+    };
+    el.focus();
+    el.dispatchEvent(new PointerEvent("pointerdown", { ...options, buttons: 1, pointerId: 1 }));
+    el.dispatchEvent(new MouseEvent("mousedown", { ...options, buttons: 1 }));
+    el.dispatchEvent(new PointerEvent("pointerup", { ...options, buttons: 0, pointerId: 1 }));
+    el.dispatchEvent(new MouseEvent("mouseup", { ...options, buttons: 0 }));
+    el.dispatchEvent(new MouseEvent("click", { ...options, buttons: 0 }));
+    return true;
+  })()`)
+  if (!pressed) throw new Error(`Select tidak ditemukan: ${selector}`)
+  await sleep(400)
+}
+
 async function clickTextUntil(selector, text, expression, timeout = 10000) {
   const start = Date.now()
   while (Date.now() - start < timeout) {
@@ -351,7 +378,7 @@ try {
   // Bersihkan data uji pada profil Chrome ini agar hasil deterministik.
   await goto("/")
   await evaluate(
-    `localStorage.removeItem("jnt.addresses"); localStorage.removeItem("jnt.orders"); localStorage.removeItem("jnt-shipment-draft"); true`,
+    `localStorage.removeItem("jnt.addresses"); localStorage.removeItem("jnt.orders"); localStorage.removeItem("jnt-shipment-draft"); localStorage.removeItem("jnt.demo-user"); true`,
   )
 
   // Login demo
@@ -364,7 +391,7 @@ try {
   console.log(
     "AUTH:",
     await evaluate(
-      `JSON.parse(localStorage.getItem("jnt-auth")).state.user.identifier`,
+      `document.querySelector("header")?.innerText.replace(/\\s+/g, " ").slice(0, 160)`,
     ),
   )
 
@@ -789,7 +816,7 @@ try {
 
   await click("#antar-DROP_OFF")
   await waitFor(`document.querySelector("#cabang-dropoff")`, 5000)
-  await click("#cabang-dropoff")
+  await pressSelect("#cabang-dropoff")
   await waitFor(`document.querySelector('[role="option"]')`, 5000)
   const branch = await evaluate(
     `document.querySelector('[role="option"]').textContent.trim()`,
@@ -891,13 +918,13 @@ try {
   await auditA11y("pesanan-mobile")
 
   // === PROTEKSI RUTE ===
-  const authRaw = await evaluate(`localStorage.getItem("jnt-auth")`)
-  await evaluate(`localStorage.removeItem("jnt-auth"); true`)
+  const authRaw = await evaluate(`localStorage.getItem("jnt.demo-user")`)
+  await evaluate(`localStorage.removeItem("jnt.demo-user"); true`)
   await goto("/akun/pesanan")
   await waitFor(`location.pathname === "/masuk"`, 8000, "redirect protected")
   check("Rute terproteksi redirect ke /masuk", true)
   await evaluate(
-    `localStorage.setItem("jnt-auth", ${JSON.stringify(authRaw)}); true`,
+    `localStorage.setItem("jnt.demo-user", ${JSON.stringify(authRaw)}); true`,
   )
   await goto("/akun/pesanan")
   await waitForText("LJX1234567890", 12000)

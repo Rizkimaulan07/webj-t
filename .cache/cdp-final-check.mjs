@@ -2,7 +2,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 const CDP = "http://127.0.0.1:9223"
-const BASE = "http://127.0.0.1:5173"
+const BASE = "http://localhost:5173"
 const OUT = path.join(process.cwd(), ".cache", "shots")
 fs.mkdirSync(OUT, { recursive: true })
 

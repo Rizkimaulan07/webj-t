@@ -1,57 +1,89 @@
 import { useDeferredValue, useState } from "react"
 import { MapPin } from "lucide-react"
 
+import { PageHeader } from "@/components/shared/PageHeader"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { BranchList } from "@/features/branches/BranchList"
 import { BranchSearch } from "@/features/branches/BranchSearch"
 import { useBranches } from "@/features/branches/useBranches"
+import type { Branch } from "@/types/branch"
+
+type BranchFilter = "SEMUA" | Branch["type"]
+
+const TYPE_FILTERS: Array<{ id: BranchFilter; label: string }> = [
+  { id: "SEMUA", label: "Semua" },
+  { id: "HUB", label: "Hub" },
+  { id: "DROP_POINT", label: "Drop Point" },
+  { id: "AGEN", label: "Agen" },
+]
 
 export function BranchesPage() {
   const [query, setQuery] = useState("")
+  const [type, setType] = useState<BranchFilter>("SEMUA")
   const deferredQuery = useDeferredValue(query)
   const { data, isPending, isFetching } = useBranches(deferredQuery)
 
+  const hasil =
+    type === "SEMUA" ? data : data?.filter((branch) => branch.type === type)
+
   return (
     <>
-      <section className="border-b bg-card/60 py-8 sm:py-12">
-        <div className="page-container">
-          <p className="inline-flex items-center gap-2 rounded-full bg-accent/15 px-3 py-1.5 text-xs font-bold text-accent-foreground">
-            <MapPin className="size-3.5" aria-hidden="true" />
-            Jaringan cabang
-          </p>
-          <h1 className="mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl">
-            Temukan hub, drop point, dan agen
-          </h1>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Antarkan paket sendiri untuk menghemat biaya, atau cek layanan yang
-            tersedia di cabang terdekat sebelum berkunjung.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="Jaringan cabang"
+        title="Temukan hub, drop point, dan agen"
+        description="Antarkan paket sendiri untuk menghemat biaya, atau cek layanan yang tersedia di cabang terdekat sebelum berkunjung."
+        icon={MapPin}
+      />
 
       <div className="page-container py-8">
         <Card>
-          <CardContent className="pt-0">
+          <CardContent className="grid gap-4">
             <BranchSearch value={query} onChange={setQuery} />
-            <div className="mt-4 flex min-h-6 items-center justify-between gap-3 text-sm text-muted-foreground">
+
+            <div
+              className="flex flex-wrap gap-2"
+              aria-label="Filter jenis cabang"
+            >
+              {TYPE_FILTERS.map((filter) => (
+                <Button
+                  key={filter.id}
+                  type="button"
+                  size="sm"
+                  variant={type === filter.id ? "accent" : "outline"}
+                  aria-pressed={type === filter.id}
+                  onClick={() => setType(filter.id)}
+                >
+                  {filter.label}
+                </Button>
+              ))}
+            </div>
+
+            <div className="flex min-h-6 flex-wrap items-center justify-between gap-3 border-t pt-3 text-sm text-muted-foreground">
               <p aria-live="polite">
                 {isPending
                   ? "Memuat cabang…"
-                  : `${data?.length ?? 0} cabang ditemukan`}
+                  : `${hasil?.length ?? 0} cabang ditemukan`}
                 {isFetching && !isPending && " · memperbarui…"}
               </p>
-              <p className="hidden sm:block">Jam operasional dapat berbeda saat libur nasional.</p>
+              <p className="text-xs sm:text-sm">
+                Jam operasional dapat berbeda saat libur nasional.
+              </p>
             </div>
           </CardContent>
         </Card>
 
         <div className="mt-6">
           <BranchList
-            branches={data}
+            branches={hasil}
             isLoading={isPending}
             isFetching={isFetching && !isPending}
-            emptyTitle={`Tidak ada cabang untuk “${deferredQuery}”`}
-            emptyDescription="Coba cari nama kota lain, misalnya Bandung, Medan, atau Makassar."
+            emptyTitle={
+              deferredQuery
+                ? `Tidak ada cabang untuk “${deferredQuery}”`
+                : "Belum ada cabang untuk filter ini"
+            }
+            emptyDescription="Coba kata kunci atau jenis cabang lain, misalnya Bandung, Medan, atau Makassar."
           />
         </div>
       </div>

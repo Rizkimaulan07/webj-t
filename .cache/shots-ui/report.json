@@ -1,0 +1,109 @@
+{
+  "report": [
+    {
+      "viewport": "1280",
+      "url": "/",
+      "overflow": 0,
+      "h1": "Kirim paket lebih laju, sampai dengan aman.",
+      "logoWidth": 14,
+      "primary": "#d6001c",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.65)"
+    },
+    {
+      "viewport": "1280",
+      "url": "/tarif",
+      "overflow": 0,
+      "h1": "Hitung tarif sebelum kirim",
+      "logoWidth": 14,
+      "primary": "#d6001c",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.65)"
+    },
+    {
+      "viewport": "1280",
+      "url": "/cabang",
+      "overflow": 0,
+      "h1": "Temukan hub, drop point, dan agen",
+      "logoWidth": 14,
+      "primary": "#d6001c",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.65)"
+    },
+    {
+      "viewport": "1280",
+      "url": "/bantuan",
+      "overflow": 0,
+      "h1": "Ada yang bisa kami bantu?",
+      "logoWidth": 14,
+      "primary": "#d6001c",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.65)"
+    },
+    {
+      "viewport": "1280",
+      "url": "/lacak",
+      "overflow": 0,
+      "h1": "Temukan posisi paketmu",
+      "logoWidth": 14,
+      "primary": "#d6001c",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.65)"
+    },
+    {
+      "viewport": "1280",
+      "url": "/masuk",
+      "overflow": 0,
+      "h1": "Masuk ke akunmu",
+      "logoWidth": 14,
+      "primary": "#d6001c",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.65)"
+    },
+    {
+      "viewport": "768",
+      "url": "/",
+      "overflow": 0
+    },
+    {
+      "viewport": "768",
+      "url": "/tarif",
+      "overflow": 0
+    },
+    {
+      "viewport": "768",
+      "url": "/cabang",
+      "overflow": 0
+    },
+    {
+      "viewport": "768",
+      "url": "/bantuan",
+      "overflow": 0
+    },
+    {
+      "viewport": "360",
+      "url": "/",
+      "overflow": 0
+    },
+    {
+      "viewport": "360",
+      "url": "/tarif",
+      "overflow": 0
+    },
+    {
+      "viewport": "360",
+      "url": "/cabang",
+      "overflow": 0
+    },
+    {
+      "viewport": "360",
+      "url": "/bantuan",
+      "overflow": 0
+    },
+    {
+      "viewport": "360",
+      "url": "/lacak",
+      "overflow": 0
+    },
+    {
+      "viewport": "360",
+      "url": "/masuk",
+      "overflow": 0
+    }
+  ],
+  "problems": []
+}

@@ -88,7 +88,7 @@
     {
       "name": "Halaman sukses menampilkan resi baru",
       "ok": true,
-      "detail": "LJX9368556734"
+      "detail": "LJX1822599811"
     },
     {
       "name": "Ringkasan QRIS di halaman sukses",
@@ -193,7 +193,7 @@
     {
       "name": "Cabang drop-off bisa dipilih",
       "ok": true,
-      "detail": "JNT Drop Point Bandung Dago — Bandung"
+      "detail": "J&T Drop Point Bandung Dago — Bandung"
     },
     {
       "name": "Simulasi COD tampil",
@@ -208,7 +208,7 @@
     {
       "name": "Resi COD baru terbit",
       "ok": true,
-      "detail": "LJX9667114219"
+      "detail": "LJX8455855510"
     },
     {
       "name": "Halaman sukses COD menampilkan instruksi tunai",
@@ -278,7 +278,7 @@
     {
       "name": "A11y home-mobile: target sentuh >=44px",
       "ok": true,
-      "detail": "0/27 kecil: "
+      "detail": "0/29 kecil: "
     },
     {
       "name": "A11y tarif-mobile: semua input berlabel",
@@ -308,7 +308,7 @@
     {
       "name": "A11y tarif-mobile: target sentuh >=44px",
       "ok": true,
-      "detail": "0/17 kecil: "
+      "detail": "0/23 kecil: "
     },
     {
       "name": "A11y kirim-mobile: semua input berlabel",
@@ -338,7 +338,7 @@
     {
       "name": "A11y kirim-mobile: target sentuh >=44px",
       "ok": true,
-      "detail": "0/22 kecil: "
+      "detail": "0/24 kecil: "
     },
     {
       "name": "A11y pesanan-mobile: semua input berlabel",
@@ -368,7 +368,7 @@
     {
       "name": "A11y pesanan-mobile: target sentuh >=44px",
       "ok": true,
-      "detail": "0/28 kecil: "
+      "detail": "0/30 kecil: "
     },
     {
       "name": "Rute terproteksi redirect ke /masuk",
@@ -387,7 +387,7 @@
     }
   ],
   "errors": [],
-  "awb1": "LJX9368556734",
-  "awb2": "LJX9667114219",
-  "branch": "JNT Drop Point Bandung Dago — Bandung"
+  "awb1": "LJX1822599811",
+  "awb2": "LJX8455855510",
+  "branch": "J&T Drop Point Bandung Dago — Bandung"
 }

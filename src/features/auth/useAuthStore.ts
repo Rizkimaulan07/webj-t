@@ -1,7 +1,7 @@
 import { create } from "zustand"
 
 import type { AuthUser } from "@/types/user"
-import { apiRequest, ApiError } from "@/lib/api/client"
+import { apiRequest, ApiError, bacaLokal, tulisLokal } from "@/lib/api/client"
 
 interface RegisterInput {
   name: string
@@ -25,6 +25,7 @@ export const DEMO_CREDENTIALS = {
 } as const
 
 export const DEMO_USER_ID = "demo-user"
+const DEMO_STORAGE_KEY = "demo-user"
 
 const DEMO_USER: AuthUser = {
   id: DEMO_USER_ID,
@@ -47,10 +48,16 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
   initialize: async () => {
     set({ ready: false, authError: null })
+    const demo = bacaLokal<AuthUser | null>(DEMO_STORAGE_KEY, null)
+    if (demo?.id === DEMO_USER_ID) {
+      set({ user: demo, ready: true, authError: null })
+      return
+    }
+
     try {
-      const user = await apiRequest<AuthUser>("/api/auth/me")
+      const user = await apiRequest<AuthUser | null>("/api/auth/me")
       if (get().ready) return
-      set({ user, ready: true })
+      set({ user, ready: true, authError: null })
     } catch (error) {
       if (get().ready) return
       if (error instanceof ApiError && error.code === "UNAUTHORIZED") {
@@ -75,6 +82,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       normalized === DEMO_CREDENTIALS.identifier &&
       password === DEMO_CREDENTIALS.password
     ) {
+      tulisLokal(DEMO_STORAGE_KEY, DEMO_USER)
       set({ user: DEMO_USER, ready: true })
       return DEMO_USER
     }
@@ -83,6 +91,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       method: "POST",
       body: JSON.stringify({ identifier, password }),
     })
+    tulisLokal(DEMO_STORAGE_KEY, null)
     set({ user, ready: true, authError: null })
     return user
   },
@@ -93,12 +102,14 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       method: "POST",
       body: JSON.stringify(input),
     })
+    tulisLokal(DEMO_STORAGE_KEY, null)
     set({ user, ready: true, authError: null })
     return user
   },
 
   logout: async () => {
     const user = get().user
+    tulisLokal(DEMO_STORAGE_KEY, null)
     set({ user: null, ready: true, authError: null })
     if (!user || user.id === DEMO_USER_ID) return
 

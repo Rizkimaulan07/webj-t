@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { Clock3, PackageCheck, ShieldCheck } from "lucide-react"
 
+import { Logo } from "@/components/shared/Logo"
 import { cn } from "@/lib/utils"
 
 interface AuthLayoutProps {
@@ -38,23 +39,28 @@ export function AuthLayout({
   return (
     <div className="page-container py-8 sm:py-12">
       <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-10">
-        <aside className="relative hidden overflow-hidden rounded-2xl bg-primary p-8 text-primary-foreground lg:flex lg:flex-col lg:justify-between">
+        <aside className="brand-gradient relative hidden overflow-hidden rounded-2xl p-8 text-white lg:flex lg:flex-col lg:justify-between">
           <div
-            className="absolute -top-20 -right-16 size-72 rounded-full bg-accent/25 blur-3xl"
+            className="brand-grid pointer-events-none absolute inset-0 opacity-[0.06]"
             aria-hidden="true"
           />
           <div
-            className="absolute -bottom-24 -left-16 size-72 rounded-full bg-info/20 blur-3xl"
+            className="absolute -top-20 -right-16 size-72 rounded-full bg-white/15 blur-3xl"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute -bottom-24 -left-16 size-72 rounded-full bg-black/20 blur-3xl"
             aria-hidden="true"
           />
           <div className="relative">
-            <p className="text-xs font-bold tracking-[0.18em] text-accent uppercase">
-              Akun J&T Express
+            <Logo asLink={false} tone="light" className="h-11" />
+            <p className="mt-6 text-xs font-bold tracking-[0.18em] text-[#ffd7db] uppercase">
+              Akun J&amp;T Express
             </p>
-            <h2 className="mt-4 max-w-md text-3xl leading-tight font-extrabold">
+            <h2 className="mt-3 max-w-md text-3xl leading-tight font-extrabold">
               Satu akun untuk semua kebutuhan pengirimanmu.
             </h2>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-primary-foreground/75">
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/75">
               Daftar gratis, atur pengiriman dengan cepat, dan pantau paket
               tanpa perlu mencatat nomor resi di tempat lain.
             </p>
@@ -63,12 +69,12 @@ export function AuthLayout({
           <ul className="relative mt-10 grid gap-5">
             {benefits.map((benefit) => (
               <li key={benefit.title} className="flex gap-3">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-accent">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white ring-1 ring-white/15">
                   <benefit.icon className="size-5" aria-hidden="true" />
                 </span>
                 <div>
                   <p className="text-sm font-bold">{benefit.title}</p>
-                  <p className="mt-0.5 text-xs leading-relaxed text-primary-foreground/70">
+                  <p className="mt-0.5 text-xs leading-relaxed text-white/70">
                     {benefit.description}
                   </p>
                 </div>
@@ -76,15 +82,18 @@ export function AuthLayout({
             ))}
           </ul>
 
-          <p className="relative mt-10 text-xs text-primary-foreground/60">
-            <Link to="/lacak" className="underline underline-offset-4 hover:text-white">
+          <p className="relative mt-10 text-xs text-white/70">
+            <Link
+              to="/lacak"
+              className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-white"
+            >
               Lacak paket tanpa akun
             </Link>
           </p>
         </aside>
 
         <div className="flex items-center">
-          <div className="w-full rounded-2xl border bg-card p-6 shadow-soft sm:p-8">
+          <div className="w-full rounded-2xl border border-border/80 bg-card p-6 shadow-soft sm:p-8">
             <div className="mb-6">
               <h1 className="text-2xl font-extrabold sm:text-3xl">{title}</h1>
               <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">

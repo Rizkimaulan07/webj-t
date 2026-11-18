@@ -1,5 +1,6 @@
 import { ArrowRight, ShieldCheck } from "lucide-react"
 
+import { Logo } from "@/components/shared/Logo"
 import { Barcode } from "@/features/label/Barcode"
 import { angka, rupiah, tanggalSingkat } from "@/lib/format"
 import { DELIVERY_LABEL, PAYMENT_LABEL } from "@/lib/payments"
@@ -22,18 +23,11 @@ export function ShippingLabel({ order }: ShippingLabelProps) {
   return (
     <article className="label-sheet mx-auto w-full max-w-[30rem] border border-black/15 bg-white p-4 text-black shadow-soft sm:p-5">
       <header className="flex items-start justify-between gap-3 border-b-2 border-black pb-2.5">
-        <div className="flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-md bg-primary text-[0.6rem] font-extrabold tracking-tight text-white">
-            JNT
-          </span>
-          <div>
-            <p className="text-sm leading-none font-extrabold tracking-tight">
-              J&T Express
-            </p>
-            <p className="mt-0.5 text-[0.58rem] font-semibold tracking-[0.16em] text-black/60 uppercase">
-              Laju sampai tujuan
-            </p>
-          </div>
+        <div className="flex items-center gap-2.5">
+          <Logo asLink={false} className="h-8" />
+          <p className="border-l border-black/20 pl-2.5 text-[0.58rem] font-semibold tracking-[0.14em] text-black/60 uppercase">
+            Laju sampai tujuan
+          </p>
         </div>
         <div className="text-right">
           <p className="text-xs font-extrabold uppercase">

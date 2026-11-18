@@ -123,7 +123,7 @@ export function ShipmentSuccessPage() {
               </p>
               <Button
                 type="button"
-                variant="accent"
+                variant="on-brand"
                 size="sm"
                 onClick={() => void salinResi()}
               >

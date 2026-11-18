@@ -399,8 +399,22 @@ app.post("/api/auth/login", async (request, response) => {
   response.json(user)
 })
 
-app.get("/api/auth/me", requireUser, (request, response) => {
-  response.json(request.user)
+app.get("/api/auth/me", async (request, response) => {
+  if (!request.session.userId) {
+    return response.json(null)
+  }
+
+  const result = await pool.query(
+    "SELECT id, name, identifier FROM users WHERE id = $1",
+    [request.session.userId],
+  )
+
+  if (!result.rows[0]) {
+    request.session.destroy(() => {})
+    return response.json(null)
+  }
+
+  response.json(publicUser(result.rows[0]))
 })
 
 app.post("/api/auth/logout", async (request, response) => {

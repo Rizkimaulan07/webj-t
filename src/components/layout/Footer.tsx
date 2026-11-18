@@ -25,8 +25,8 @@ export function Footer() {
     <footer className="no-print mt-auto bg-[#171314] text-white">
       <div className="h-1 brand-gradient" aria-hidden="true" />
       <div className="page-container py-12 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_0.9fr_0.9fr_1.2fr]">
-          <div className="space-y-5">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_0.9fr_0.9fr_1.2fr]">
+          <div className="space-y-5 sm:col-span-2 lg:col-span-1">
             <Logo asLink={false} tone="light" className="h-12" />
             <p className="max-w-xs text-sm leading-relaxed text-white/60">
               Jaringan pengiriman yang menghubungkan kota-kota di Indonesia.
@@ -80,7 +80,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="sm:col-span-2 lg:col-span-1">
             <h2 className="text-sm font-extrabold text-white">Hubungi kami</h2>
             <ul className="mt-2 grid gap-2.5 text-sm text-white/60">
               <li className="flex items-start gap-2">

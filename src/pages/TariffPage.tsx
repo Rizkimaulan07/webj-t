@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { AlertCircle, Calculator, MapPinned } from "lucide-react"
 import { toast } from "sonner"
@@ -70,14 +70,17 @@ export function TariffPage() {
   const navigate = useNavigate()
   const user = useAuthStore((state) => state.user)
   const initial = ambilTarifDariUrl(searchParams)
+  const paramKey = searchParams.toString()
   const [submitted, setSubmitted] = useState<TariffInput | null>(
     initial.submitted,
   )
+  const [syncedParamKey, setSyncedParamKey] = useState(paramKey)
   const { data, isPending, isError, error, refetch } = useTariff(submitted)
 
-  useEffect(() => {
+  if (paramKey !== syncedParamKey) {
+    setSyncedParamKey(paramKey)
     setSubmitted(ambilTarifDariUrl(searchParams).submitted)
-  }, [searchParams])
+  }
 
   const pilihLayanan = (option: TariffOption) => {
     if (!user) {
