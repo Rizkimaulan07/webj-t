@@ -35,7 +35,7 @@ import { SERVICE_LABEL } from "@/lib/services"
 export function ShipmentSuccessPage() {
   const { awb } = useParams<{ awb: string }>()
   const user = useAuthStore((state) => state.user)
-  const { data: order, isPending, isError } = useOrderByAwb(awb)
+  const { data: order, isPending, isError } = useOrderByAwb(awb, user?.id)
 
   const bukanMilik = order && order.ownerId !== user?.id
 

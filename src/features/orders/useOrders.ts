@@ -10,10 +10,13 @@ export function useOrders(ownerId: string | undefined) {
   })
 }
 
-export function useOrderByAwb(awb: string | undefined) {
+export function useOrderByAwb(
+  awb: string | undefined,
+  userId: string | undefined,
+) {
   return useQuery({
-    queryKey: ["order", awb],
-    queryFn: () => getOrderByAwb(awb ?? ""),
-    enabled: Boolean(awb),
+    queryKey: ["order", awb, userId],
+    queryFn: () => getOrderByAwb(awb ?? "", userId ?? ""),
+    enabled: Boolean(awb && userId),
   })
 }

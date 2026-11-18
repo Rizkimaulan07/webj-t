@@ -1,13 +1,91 @@
 const STORAGE_PREFIX = "jnt."
 
-export class ApiError extends Error {
-  readonly code: "NOT_FOUND" | "VALIDATION" | "UNAUTHORIZED"
+export type ApiErrorCode =
+  | "NOT_FOUND"
+  | "VALIDATION"
+  | "UNAUTHORIZED"
+  | "CONFLICT"
+  | "SERVER_ERROR"
+  | "UNAVAILABLE"
 
-  constructor(message: string, code: ApiError["code"]) {
+export class ApiError extends Error {
+  readonly code: ApiErrorCode
+
+  constructor(message: string, code: ApiErrorCode) {
     super(message)
     this.name = "ApiError"
     this.code = code
   }
+}
+
+interface ApiFailure {
+  error?: {
+    code?: string
+    message?: string
+  }
+}
+
+export async function apiRequest<T>(
+  path: string,
+  options: RequestInit = {},
+): Promise<T> {
+  const headers = new Headers(options.headers)
+  if (options.body && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json")
+  }
+
+  let response: Response
+  try {
+    response = await fetch(path, {
+      ...options,
+      headers,
+      credentials: "same-origin",
+    })
+  } catch {
+    throw new ApiError(
+      "Server tidak dapat dijangkau. Pastikan API dan PostgreSQL berjalan.",
+      "UNAVAILABLE",
+    )
+  }
+
+  let body: unknown
+  try {
+    body = await response.json()
+  } catch {
+    throw new ApiError(
+      "Server mengirim respons yang tidak dapat dibaca.",
+      "SERVER_ERROR",
+    )
+  }
+
+  if (!response.ok) {
+    const failure = body as ApiFailure
+    const code = failure.error?.code
+    const allowedCodes: ApiErrorCode[] = [
+      "NOT_FOUND",
+      "VALIDATION",
+      "UNAUTHORIZED",
+      "CONFLICT",
+      "SERVER_ERROR",
+      "UNAVAILABLE",
+    ]
+    const safeCode =
+      code && allowedCodes.includes(code as ApiErrorCode)
+        ? (code as ApiErrorCode)
+        : response.status === 401
+          ? "UNAUTHORIZED"
+          : response.status === 404
+            ? "NOT_FOUND"
+            : response.status === 400
+              ? "VALIDATION"
+              : "SERVER_ERROR"
+    throw new ApiError(
+      failure.error?.message ?? "Permintaan gagal. Coba lagi.",
+      safeCode,
+    )
+  }
+
+  return body as T
 }
 
 export function bacaLokal<T>(key: string, fallback: T): T {

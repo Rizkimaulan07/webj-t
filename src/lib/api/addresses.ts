@@ -1,5 +1,6 @@
 import type { AddressInput, SavedAddress } from "@/types/user"
-import { ApiError, buatId, bacaLokal, jedaApi, tulisLokal } from "./client"
+import { DEMO_USER_ID } from "@/features/auth/useAuthStore"
+import { apiRequest, ApiError, buatId, bacaLokal, jedaApi, tulisLokal } from "./client"
 
 const ADDRESSES_KEY = "addresses"
 
@@ -8,6 +9,10 @@ function bacaSemuaAlamat(): SavedAddress[] {
 }
 
 export async function getAddresses(userId: string): Promise<SavedAddress[]> {
+  if (userId !== DEMO_USER_ID) {
+    return apiRequest<SavedAddress[]>("/api/addresses")
+  }
+
   await jedaApi()
   return bacaSemuaAlamat()
     .filter((address) => address.userId === userId)
@@ -18,6 +23,13 @@ export async function createAddress(
   userId: string,
   input: AddressInput,
 ): Promise<SavedAddress> {
+  if (userId !== DEMO_USER_ID) {
+    return apiRequest<SavedAddress>("/api/addresses", {
+      method: "POST",
+      body: JSON.stringify(input),
+    })
+  }
+
   await jedaApi()
   const address: SavedAddress = {
     ...input,
@@ -33,6 +45,13 @@ export async function updateAddress(
   id: string,
   input: AddressInput,
 ): Promise<SavedAddress> {
+  if (userId !== DEMO_USER_ID) {
+    return apiRequest<SavedAddress>(`/api/addresses/${encodeURIComponent(id)}`, {
+      method: "PUT",
+      body: JSON.stringify(input),
+    })
+  }
+
   await jedaApi()
   const semua = bacaSemuaAlamat()
   const existing = semua.find(
@@ -53,6 +72,14 @@ export async function deleteAddress(
   userId: string,
   id: string,
 ): Promise<void> {
+  if (userId !== DEMO_USER_ID) {
+    await apiRequest<{ success: true }>(
+      `/api/addresses/${encodeURIComponent(id)}`,
+      { method: "DELETE" },
+    )
+    return
+  }
+
   await jedaApi()
   const semua = bacaSemuaAlamat()
   const exists = semua.some(

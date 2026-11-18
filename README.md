@@ -1,5 +1,15 @@
 # React + TypeScript + Vite
 
+## PostgreSQL lokal
+
+1. Pastikan layanan PostgreSQL berjalan.
+2. Salin `.env.example` menjadi `.env`, lalu isi `DATABASE_URL` dengan kata sandi PostgreSQL lokal yang kuat dan buat `SESSION_SECRET` acak minimal 32 karakter. Jangan kirim atau commit `.env`.
+3. Pasang dependensi dengan `npm install`.
+4. Buat database `jnt_express` (jika belum ada) dan tabel aplikasi dengan `npm run db:setup`.
+5. Jalankan aplikasi dan API dengan `npm run dev`.
+
+`npm run db:migrate` menerapkan ulang skema secara aman tanpa menghapus data. Akun, buku alamat, pesanan, dan riwayat pelacakan pengguna disimpan di PostgreSQL. Tarif, daftar kota/cabang, dan data resi demo tetap merupakan data contoh di aplikasi.
+
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
 Currently, two official plugins are available:

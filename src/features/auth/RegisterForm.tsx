@@ -71,10 +71,10 @@ export function RegisterForm() {
     },
   })
 
-  const submit = (values: RegisterValues) => {
+  const submit = async (values: RegisterValues) => {
     setErrorMessage(null)
     try {
-      const user = registerAccount({
+      const user = await registerAccount({
         name: values.name,
         identifier: values.identifier,
         password: values.password,
@@ -192,7 +192,7 @@ export function RegisterForm() {
       </p>
       <p className="text-center text-xs leading-relaxed text-muted-foreground">
         Dengan mendaftar, kamu menyetujui syarat layanan dan kebijakan privasi
-        demo ini. Data akun disimpan lokal di perangkatmu.
+        demo ini. Data akun disimpan pada database layanan.
       </p>
     </form>
   )

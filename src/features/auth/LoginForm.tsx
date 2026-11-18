@@ -40,10 +40,10 @@ export function LoginForm() {
 
   const punyaTujuanAwal = Boolean(location.state)
 
-  const submit = (values: LoginValues) => {
+  const submit = async (values: LoginValues) => {
     setErrorMessage(null)
     try {
-      const user = login(values.identifier, values.password)
+      const user = await login(values.identifier, values.password)
       toast.success(`Selamat datang kembali, ${user.name}.`)
       navigate(pathSetelahMasuk(location.state), { replace: true })
     } catch (error) {

@@ -1,11 +1,7 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
 
 import type { AuthUser } from "@/types/user"
-
-interface AccountRecord extends AuthUser {
-  password: string
-}
+import { apiRequest, ApiError } from "@/lib/api/client"
 
 interface RegisterInput {
   name: string
@@ -15,10 +11,12 @@ interface RegisterInput {
 
 interface AuthState {
   user: AuthUser | null
-  accounts: AccountRecord[]
-  login: (identifier: string, password: string) => AuthUser
-  register: (input: RegisterInput) => AuthUser
-  logout: () => void
+  ready: boolean
+  authError: string | null
+  initialize: () => Promise<void>
+  login: (identifier: string, password: string) => Promise<AuthUser>
+  register: (input: RegisterInput) => Promise<AuthUser>
+  logout: () => Promise<void>
 }
 
 export const DEMO_CREDENTIALS = {
@@ -26,11 +24,12 @@ export const DEMO_CREDENTIALS = {
   password: "demo123",
 } as const
 
-const AKUN_DEMO: AccountRecord = {
-  id: "demo-user",
+export const DEMO_USER_ID = "demo-user"
+
+const DEMO_USER: AuthUser = {
+  id: DEMO_USER_ID,
   name: "Demo J&T",
   identifier: DEMO_CREDENTIALS.identifier,
-  password: DEMO_CREDENTIALS.password,
 }
 
 function normalisasiIdentifier(identifier: string): string {
@@ -41,66 +40,74 @@ function normalisasiIdentifier(identifier: string): string {
   return trimmed
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set, get) => ({
-      user: null,
-      // Catatan: penyimpanan akun ini hanya simulasi untuk demo.
-      accounts: [AKUN_DEMO],
+export const useAuthStore = create<AuthState>()((set, get) => ({
+  user: null,
+  ready: false,
+  authError: null,
 
-      login: (identifier, password) => {
-        const normalized = normalisasiIdentifier(identifier)
-        const account = get().accounts.find(
-          (item) => item.identifier === normalized,
-        )
-        if (!account) {
-          throw new Error(
-            "Akun tidak ditemukan. Periksa email/HP atau daftar terlebih dahulu.",
-          )
-        }
-        if (account.password !== password) {
-          throw new Error("Kata sandi belum tepat. Coba lagi.")
-        }
-        const user: AuthUser = {
-          id: account.id,
-          name: account.name,
-          identifier: account.identifier,
-        }
-        set({ user })
-        return user
-      },
+  initialize: async () => {
+    set({ ready: false, authError: null })
+    try {
+      const user = await apiRequest<AuthUser>("/api/auth/me")
+      if (get().ready) return
+      set({ user, ready: true })
+    } catch (error) {
+      if (get().ready) return
+      if (error instanceof ApiError && error.code === "UNAUTHORIZED") {
+        set({ user: null, ready: true, authError: null })
+        return
+      }
+      set({
+        user: null,
+        ready: true,
+        authError:
+          error instanceof Error
+            ? error.message
+            : "Sesi akun gagal diperiksa.",
+      })
+    }
+  },
 
-      register: ({ name, identifier, password }) => {
-        const normalized = normalisasiIdentifier(identifier)
-        if (get().accounts.some((item) => item.identifier === normalized)) {
-          throw new Error("Email atau nomor HP sudah terdaftar. Silakan masuk.")
-        }
-        const account: AccountRecord = {
-          id: `user-${crypto.randomUUID()}`,
-          name: name.trim(),
-          identifier: normalized,
-          password,
-        }
-        const user: AuthUser = {
-          id: account.id,
-          name: account.name,
-          identifier: account.identifier,
-        }
-        set((state) => ({
-          user,
-          accounts: [...state.accounts, account],
-        }))
-        return user
-      },
+  login: async (identifier, password) => {
+    set({ authError: null })
+    const normalized = normalisasiIdentifier(identifier)
+    if (
+      normalized === DEMO_CREDENTIALS.identifier &&
+      password === DEMO_CREDENTIALS.password
+    ) {
+      set({ user: DEMO_USER, ready: true })
+      return DEMO_USER
+    }
 
-      logout: () => set({ user: null }),
-    }),
-    {
-      name: "jnt-auth",
-      partialize: (state) => ({
-        user: state.user,
-        accounts: state.accounts,
-      }),
-    },
-  ),
-)
+    const user = await apiRequest<AuthUser>("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ identifier, password }),
+    })
+    set({ user, ready: true, authError: null })
+    return user
+  },
+
+  register: async (input) => {
+    set({ authError: null })
+    const user = await apiRequest<AuthUser>("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify(input),
+    })
+    set({ user, ready: true, authError: null })
+    return user
+  },
+
+  logout: async () => {
+    const user = get().user
+    set({ user: null, ready: true, authError: null })
+    if (!user || user.id === DEMO_USER_ID) return
+
+    try {
+      await apiRequest<{ success: true }>("/api/auth/logout", {
+        method: "POST",
+      })
+    } catch {
+      // State lokal sudah bersih; sesi server akan kedaluwarsa sendiri.
+    }
+  },
+}))

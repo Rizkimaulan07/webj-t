@@ -43,11 +43,17 @@ export function Navbar() {
   const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const keluar = () => {
-    logout()
-    setMobileOpen(false)
-    toast.success("Kamu sudah keluar dari akun.")
-    navigate("/")
+  const keluar = async () => {
+    try {
+      await logout()
+      setMobileOpen(false)
+      toast.success("Kamu sudah keluar dari akun.")
+      navigate("/")
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Gagal keluar dari akun.",
+      )
+    }
   }
 
   return (

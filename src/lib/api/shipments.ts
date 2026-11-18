@@ -7,7 +7,8 @@ import type {
   ShipmentOrder,
   TrackingEvent,
 } from "@/types/shipment"
-import { ApiError, bacaLokal, jedaApi, tulisLokal } from "./client"
+import { DEMO_USER_ID } from "@/features/auth/useAuthStore"
+import { apiRequest, ApiError, bacaLokal, jedaApi, tulisLokal } from "./client"
 
 const ORDERS_KEY = "orders"
 
@@ -25,6 +26,10 @@ export function cariPesananByAwb(awb: string): ShipmentOrder | undefined {
 }
 
 export async function getOrders(ownerId: string): Promise<ShipmentOrder[]> {
+  if (ownerId !== DEMO_USER_ID) {
+    return apiRequest<ShipmentOrder[]>("/api/shipments")
+  }
+
   await jedaApi()
   const semua = [...bacaPesananTersimpan(), ...DEMO_ORDERS]
   const unik = new Map(semua.map((order) => [order.awb, order]))
@@ -33,7 +38,16 @@ export async function getOrders(ownerId: string): Promise<ShipmentOrder[]> {
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 }
 
-export async function getOrderByAwb(awb: string): Promise<ShipmentOrder> {
+export async function getOrderByAwb(
+  awb: string,
+  ownerId: string,
+): Promise<ShipmentOrder> {
+  if (ownerId !== DEMO_USER_ID) {
+    return apiRequest<ShipmentOrder>(
+      `/api/shipments/${encodeURIComponent(awb.trim().toUpperCase())}`,
+    )
+  }
+
   await jedaApi()
   const order = cariPesananByAwb(awb)
   if (!order) {
@@ -116,6 +130,14 @@ function buatEvents(
 export async function createShipment(
   input: CreateShipmentInput,
 ): Promise<ShipmentOrder> {
+  const { ownerId, ...payload } = input
+  if (ownerId !== DEMO_USER_ID) {
+    return apiRequest<ShipmentOrder>("/api/shipments", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    })
+  }
+
   await jedaApi(500, 900)
 
   const stored = bacaPesananTersimpan()
